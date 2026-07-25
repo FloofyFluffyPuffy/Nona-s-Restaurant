@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Header from "@/code/components/Layout/Header/Header";
 import Footer from "@/code/components/Layout/Footer";
-import TopBar from "@/code/components/Layout/Header/TopBar";
 import { ContextProvider } from "@/code/typescript/context/Provider";
+import Marquee, { MarqueeReverse } from "@/code/components/Home/Marquee";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,10 +32,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ContextProvider>
-        <TopBar/>
         <Header/>
         {children}
         <Footer/>
+        <MarqueeReverse/>
       </ContextProvider>
       </body>
     </html>

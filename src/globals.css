@@ -1,17 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&display=swap');
-
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-inter: "Inter", Arial, Helvetica, sans-serif;
+  --font-playfair-display: "Playfair Display", Georgia, "Times New Roman", serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair-display);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,23 +26,32 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-playfair-display);
 }
 
 .hero {
-    background-image: 
+  background-image:
     linear-gradient(
-      rgba(42, 39, 37, 0.5) 0%,       
+      rgba(42, 39, 37, 0.5) 0%,
       rgba(42, 39, 37, 0.8) 100%
     ),
     url(/assets/homeHero.webp);
 }
 
-.aboutHero{
-    @apply lg:h-screen md:h-screen sm:h-[30vh] pt-20  bg-cover bg-center bg-no-repeat bg-fixed;
+.aboutHero {
+  @apply lg:h-screen md:h-screen sm:h-[30vh] pt-20 bg-cover bg-center bg-no-repeat bg-fixed;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)),
-    url("/assets/imgi_55_about-bg.755e6d02.jpg");   
+    url("/assets/imgi_55_about-bg.755e6d02.jpg");
 }
 
 @keyframes marquee {

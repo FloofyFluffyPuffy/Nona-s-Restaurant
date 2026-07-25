@@ -11,7 +11,6 @@ export default function Home() {
       <HomeHero/>
       <Marquee/>
       <HomeFeatured/>
-      <MarqueeReverse/>
       <HomeInfo/>
       <HomeReview/>
     </div>

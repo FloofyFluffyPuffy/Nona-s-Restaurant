@@ -1,106 +1,119 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useContextData } from "@/code/typescript/context/Provider";
-import { usePathname } from "next/navigation";
-import Navigation from "./Navigation";
-import { navs } from "./Navigation";
-import Link from "next/link";
 
-const Header = () => {
-  const { scroll, setSectionHash } = useContextData();
-  const pageName = usePathname();
-  const [isMobile, setIsMobile] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  
+import { useContext, useState, useEffect } from "react";
+import Link from "next/link";
+import { ContextProvider, useContextData } from "@/code/typescript/context/Provider";
+import path from "path";
+
+const navItems = [
+  { label: "Home", path: "#", active: true },
+  { label: "Menu", path: "#Menu", active: false },
+  { label: "About", path: "#about", active: false },
+  { label: "Contact", path: "#contact", active: false },
+  {
+    label: "Others",
+    path: "#others",
+    active: false,
+    dropdown: [
+      { id: 1, name: "Catering", path: "#events", page: "/" },
+      { id: 2, name: "Gallery", path: "#gallery", page: "/" },
+      { id: 3, name: "Location", path: "#location", page: "/" },
+    ],
+  },
+];
+
+export default function MinimalHeader() {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { scroll, setScroll } = useContextData();
+
   useEffect(() => {
-    const updateSize = () => setIsMobile(window.innerWidth <= 640);
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-  const reservationPath = "#reservation";
+    const onScroll = () => {
+      setScroll(window.scrollY);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [setScroll]);
 
   return (
-    <div
-      className={`fixed right-0 left-0 top-0 z-50 grid grid-cols-3 items-center w-full h-16 transition-transform duration-300 ease-in-out text-white
-        ${!isMobile 
-          ? `px-6 lg:px-10 ${scroll > 50 ? "bg-black translate-y-0" : "translate-y-8 bg-black/50"}` 
-          : "px-4 bg-black translate-y-0"
-        }`}
-    >
-      
-      {/* 1. BOOK A TABLE BUTTON */}
-      <div className={`flex items-center ${isMobile ? "justify-start" : "order-3 justify-end"}`}>
-        <Link
-          href="#reservation"
-          className={`inline-block text-white border-[#CDA45E] font-bold border-2 bg-transparent rounded-full px-3 py-1.5 sm:px-6 transition-all duration-300 hover:bg-[#CDA45E] hover:text-black cursor-pointer  text-[11px] sm:text-md whitespace-nowrap
-  ${!isMobile ? "text-2xl" : ""}`}
-          onClick={(e) => {
-              e.preventDefault();
-              const targetElement = document.querySelector(reservationPath);
-              if (targetElement) {
-                targetElement.scrollIntoView({ behavior: "smooth" });
-              }
-            if (isMobile) setIsOpen(false);
-          }}
-        >
-          BOOK A TABLE
+    <header className={`fixed transition-color duration-500 ease-in-out top-0 z-50 w-full ${scroll > 120 ? "bg-black" : "bg-black/50"}`}>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
+        <Link href="/" className="text-xl font-bold tracking-tight text-gray-900">
+          <img src={"/assets/logo.png"} alt="Nona's Restaurant" className="reveal mx-auto h-10 w-10 rounded-full bg-white object-contain shadow-2xl ring-2 ring-white" />
         </Link>
-      </div>
 
-      {/* 2. LOGO SECTION */}
-      <div className={`flex items-center justify-center ${!isMobile ? "order-1 justify-self-start" : ""}`}>
-        {!isMobile ? (
-          <div className="flex items-center gap-2 italic text-xl lg:text-2xl text-[#E3D5C3]">
-            <img src={"/assets/logo.png"} alt="Nona's Restaurant" className="reveal mx-auto h-12 w-12 rounded-full bg-white object-contain shadow-2xl ring-2 ring-white" />
-            <span>Nona's</span>
-            {/* <img src="/assets/logo.svg" alt="Logo" className="-mx-3 h-14 w-auto inline-block" /> */}
-          </div>
-        ) : (
-          <img src="/assets/logo.svg" alt="Logo" className="h-17 w-auto" /> 
-        )}
-      </div>
-
-      {/* 3. NAV / DROPDOWN MENU */}
-      <div className={`flex items-center ${!isMobile ? "order-2 justify-center" : "justify-end relative"}`}>
-        {!isMobile ? (
-          <Navigation />
-        ) : (
-          <div className="flex flex-col items-end">
-            <button 
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-[#CDA45E] text-2xl p-2 focus:outline-none font-medium"
+        <nav className="hidden md:flex items-center gap-8">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              href={item.path}
+              className="text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
             >
-              {isOpen ? "✕" : "☰"}
-            </button>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
 
-            {/* Floating Dropdown List */}
-            {isOpen && (
-              <div className="absolute top-full text-center right-0 mt-2 bg-black/95 border border-[#CDA45E]/30 p-4 rounded-md shadow-lg z-50 min-w-[120px] max-w-[80vw]">
-                <div className="flex flex-col gap-2">
-                  {navs.map((nav) => {
-                    if(nav.name === "Others") return null;
-                    return (
-                      <div key={nav.id}>
-                        <Link
-                          href={`/${nav.name === "Home" ? "" : nav.name.toLocaleLowerCase()}`}
-                          className="block py-1 text-sm text-[#A0A0A0] hover:text-[#CDA45E] rounded-md transition-colors"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {nav.name}
-                        </Link>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="https://www.doordash.com/store/nona’s-restaurant-lodi-30510461/40175558/?rwg_token=AE37R_gM84b4JesefYU7BWnKjQeS5Oc-hICYPqvkJV0KgiOzQ0EjK62W6F5QwGx5NbdmnHkSpbARoEgT0UQS65VmgY03W1DvKw==&utm_campaign=gpa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-[#E3D5C3] px-4 py-2 text-sm font-medium text-[#2A2725] transition-all duration-300 hover:scale-110 hover:bg-[#C86632] hover:text-[#E3D5C3]"
+          >
+            Order Now!
+          </a>
+        </div>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          type="button"
+          className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 md:hidden"
+          aria-expanded={isOpen}
+          aria-label="Toggle navigation menu"
+        >
+          <svg className="h-6 w-6 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+            {isOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             )}
-          </div>
-        )}
+          </svg>
+        </button>
       </div>
-      
-    </div>
-  );
-};
 
-export default Header;
+      {isOpen && (
+        <div className="md:hidden border-b border-gray-200 bg-white px-4 pt-2 pb-6">
+          <div className="flex flex-col gap-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                href={item.path}
+                onClick={() => setIsOpen(false)}
+                className="text-base font-medium text-gray-700 hover:text-indigo-600"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <hr className="my-2 border-gray-100" />
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="text-base font-medium text-gray-700 hover:text-indigo-600"
+            >
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              onClick={() => setIsOpen(false)}
+              className="rounded-lg bg-indigo-600 py-2.5 text-center text-base font-medium text-white hover:bg-indigo-700"
+            >
+              Get Started
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
