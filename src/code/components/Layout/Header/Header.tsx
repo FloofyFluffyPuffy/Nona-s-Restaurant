@@ -1,15 +1,14 @@
 "use client";
 
-import { useContext, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ContextProvider, useContextData } from "@/code/typescript/context/Provider";
-import path from "path";
+import { useContextData } from "@/code/typescript/context/Provider";
 
 const navItems = [
-  { label: "Home", path: "#", active: true },
-  { label: "Menu", path: "#Menu", active: false },
-  { label: "About", path: "#about", active: false },
-  { label: "Contact", path: "#contact", active: false },
+  { label: "Home", path: "/", active: true },
+  { label: "Menu", path: "/menu", active: false },
+  { label: "About", path: "/about", active: false },
+  { label: "Contact", path: "/contact", active: false },
   {
     label: "Others",
     path: "#others",
@@ -22,8 +21,65 @@ const navItems = [
   },
 ];
 
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      className={`ml-1 h-4 w-4 transition-transform duration-300 ${open ? "rotate-180" : "rotate-0"}`}
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+function CartIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="9" cy="20" r="1" />
+      <circle cx="19" cy="20" r="1" />
+      <path d="M3 3h2l2.4 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L17 6H7" />
+    </svg>
+  );
+}
+
+function OrderNowButton({ mobile = false }: { mobile?: boolean }) {
+  const base =
+    "inline-flex items-center justify-center gap-2 rounded-lg bg-[#E3D5C3] px-4 py-2 text-sm font-medium text-[#2A2725] transition-all duration-300 hover:scale-105 hover:bg-[#C86632] hover:text-[#E3D5C3]";
+
+  return (
+    <a
+      href="https://www.doordash.com/store/nona’s-restaurant-lodi-30510461/40175558/?rwg_token=AE37R_gM84b4JesefYU7BWnKjQeS5Oc-hICYPqvkJV0KgiOzQ0EjK62W6F5QwGx5NbdmnHkSpbARoEgT0UQS65VmgY03W1DvKw==&utm_campaign=gpa"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${base} ${mobile ? "w-full" : ""}`}
+      aria-label="Order now"
+    >
+      <CartIcon />
+      <span>Order Now</span>
+    </a>
+  );
+}
+
 export default function MinimalHeader() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOthersOpen, setIsOthersOpen] = useState(false);
+  const [isMobileOthersOpen, setIsMobileOthersOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const { scroll, setScroll } = useContextData();
 
   useEffect(() => {
@@ -36,40 +92,97 @@ export default function MinimalHeader() {
     };
   }, [setScroll]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOthersOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const closeMenu = () => {
+    setIsOpen(false);
+    setIsOthersOpen(false);
+    setIsMobileOthersOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsOpen((prev) => !prev);
+    setIsMobileOthersOpen(false);
+  };
+
   return (
-    <header className={`fixed transition-color duration-500 ease-in-out top-0 z-50 w-full ${scroll > 120 ? "bg-black" : "bg-black/50"}`}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
-        <Link href="/" className="text-xl font-bold tracking-tight text-gray-900">
-          <img src={"/assets/logo.png"} alt="Nona's Restaurant" className="reveal mx-auto h-10 w-10 rounded-full bg-white object-contain shadow-2xl ring-2 ring-white" />
+    <header
+      className={`fixed top-0 z-50 w-full transition-all duration-500 ease-in-out ${
+        scroll > 120 ? "bg-[#2A2725]/95 shadow-lg" : "bg-[#2A2725]/70"
+      }`}
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex items-center">
+          <img
+            src="/assets/logo.png"
+            alt="Nona's Restaurant"
+            className="h-10 w-10 rounded-full bg-white object-contain shadow-2xl ring-2 ring-white"
+          />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              href={item.path}
-              className="text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-8 md:flex">
+          {navItems.map((item) =>
+            item.dropdown ? (
+              <div key={item.label} ref={dropdownRef} className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsOthersOpen((prev) => !prev)}
+                  className="inline-flex cursor-pointer items-center text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
+                  aria-expanded={isOthersOpen}
+                >
+                  {item.label}
+                  <ChevronIcon open={isOthersOpen} />
+                </button>
+
+                {isOthersOpen && (
+                  <div className="absolute left-0 mt-2 w-48 rounded-lg border border-[#E3D5C3]/20 bg-[#2A2725] p-2 shadow-xl">
+                    {item.dropdown.map((dropItem) => (
+                      <Link
+                        key={dropItem.id}
+                        href={dropItem.path}
+                        onClick={() => {
+                          setIsOthersOpen(false);
+                          setIsOpen(false);
+                        }}
+                        className="block rounded-md px-3 py-2 text-sm text-[#E3D5C3] transition-colors hover:bg-[#C86632] hover:text-white"
+                      >
+                        {dropItem.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={item.label}
+                href={item.path}
+                className="text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
+              >
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
-          <a
-            href="https://www.doordash.com/store/nona’s-restaurant-lodi-30510461/40175558/?rwg_token=AE37R_gM84b4JesefYU7BWnKjQeS5Oc-hICYPqvkJV0KgiOzQ0EjK62W6F5QwGx5NbdmnHkSpbARoEgT0UQS65VmgY03W1DvKw==&utm_campaign=gpa"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-lg bg-[#E3D5C3] px-4 py-2 text-sm font-medium text-[#2A2725] transition-all duration-300 hover:scale-110 hover:bg-[#C86632] hover:text-[#E3D5C3]"
-          >
-            Order Now!
-          </a>
+        <div className="hidden items-center gap-4 md:flex">
+          <OrderNowButton />
         </div>
 
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleMobileMenu}
           type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 md:hidden"
+          className="inline-flex items-center justify-center rounded-md p-2 text-[#E3D5C3] hover:bg-[#C86632]/20 md:hidden"
           aria-expanded={isOpen}
           aria-label="Toggle navigation menu"
         >
@@ -84,33 +197,48 @@ export default function MinimalHeader() {
       </div>
 
       {isOpen && (
-        <div className="md:hidden border-b border-gray-200 bg-white px-4 pt-2 pb-6">
-          <div className="flex flex-col gap-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                onClick={() => setIsOpen(false)}
-                className="text-base font-medium text-gray-700 hover:text-indigo-600"
-              >
-                {item.label}
-              </Link>
-            ))}
-            <hr className="my-2 border-gray-100" />
-            <Link
-              href="/login"
-              onClick={() => setIsOpen(false)}
-              className="text-base font-medium text-gray-700 hover:text-indigo-600"
-            >
-              Log in
-            </Link>
-            <Link
-              href="/signup"
-              onClick={() => setIsOpen(false)}
-              className="rounded-lg bg-indigo-600 py-2.5 text-center text-base font-medium text-white hover:bg-indigo-700"
-            >
-              Get Started
-            </Link>
+        <div className="border-t border-[#E3D5C3]/20 bg-[#2A2725] px-4 pb-6 pt-4 md:hidden">
+          <div className="flex flex-col gap-3">
+            <OrderNowButton mobile />
+
+            {navItems.map((item) =>
+              item.dropdown ? (
+                <div key={item.label} className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileOthersOpen((prev) => !prev)}
+                    className="inline-flex items-center text-left text-base font-medium text-[#E3D5C3] hover:text-[#C86632]"
+                  >
+                    {item.label}
+                    <ChevronIcon open={isMobileOthersOpen} />
+                  </button>
+
+                  {isMobileOthersOpen && (
+                    <div className="ml-4 flex flex-col gap-2">
+                      {item.dropdown.map((dropItem) => (
+                        <Link
+                          key={dropItem.id}
+                          href={dropItem.path}
+                          onClick={closeMenu}
+                          className="text-sm text-[#E3D5C3] hover:text-[#C86632]"
+                        >
+                          {dropItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.path}
+                  onClick={closeMenu}
+                  className="text-base font-medium text-[#E3D5C3] hover:text-[#C86632]"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </div>
         </div>
       )}

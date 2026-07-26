@@ -5,6 +5,19 @@ export interface ContextType {
   setSectionHash: React.Dispatch<React.SetStateAction<string>>
 }
 
+export interface Food {
+  id: number;
+  slug: string;
+  title: {
+    rendered: string;
+  };
+  acf: {
+    price: string;
+    description: string;
+    image: string; 
+    alt: string;
+  };
+}
 
 // export interface Food {
 //   id: number;
