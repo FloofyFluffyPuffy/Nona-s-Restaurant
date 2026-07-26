@@ -7,7 +7,10 @@ const Footer = () => {
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr]">
           <div className="space-y-6">
             <div>
-              <h2 className="text-2xl font-bold text-[#E3D5C3]">Nona&apos;s Restaurant</h2>
+              <div className="flex items-center gap-3">
+                <img src="/assets/logo.png" alt="Nona's Restaurant" className="h-10 w-10 rounded-full border border-[#E3D5C3]/20 bg-white object-contain" />
+                <h2 className="text-2xl font-bold text-[#E3D5C3]">Nona&apos;s Restaurant</h2>
+              </div>
               <p className="mt-4 max-w-sm text-sm leading-7 text-[#E3D5C3]/75">
                 Enjoy authentic Italian comfort food in Lodi with fresh ingredients, warm hospitality, and delicious family recipes.
               </p>
