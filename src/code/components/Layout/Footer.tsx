@@ -2,7 +2,7 @@
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1b1915] text-[#E3D5C3]">
+    <footer className="bg-[#2A2725] text-[#E3D5C3]">
       <div className="mx-auto max-w-7xl space-y-10 px-6 py-12 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr]">
           <div className="space-y-6">
@@ -61,7 +61,7 @@ const Footer = () => {
               <div className="space-y-4 text-sm text-[#E3D5C3]/85">
                 <div>
                   <p className="font-semibold text-[#E3D5C3]">Address</p>
-                  <p>1110 W Kettleman Ln Ste 18-1, Lodi, CA 95240</p>
+                  <p className="text-[#E3D5C3]">1110 W Kettleman Ln Ste 18-1, Lodi, CA 95240</p>
                 </div>
                 <div>
                   <p className="font-semibold text-[#E3D5C3]">Phone</p>
@@ -73,7 +73,7 @@ const Footer = () => {
 
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-[#E3D5C3]">Opening Hours</h3>
-            <div className="rounded-[28px] border border-[#E3D5C3] bg-[#2a2722] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+            <div className="rounded-[28px] border border-[#E3D5C3] bg-[#231f19] p-6">
               <div className="space-y-2 text-sm text-[#E3D5C3]/90">
                 <p className="font-semibold text-[#E3D5C3]">Monday — Sunday</p>
                 <p className="text-[#E3D5C3] font-semibold">11:00 AM – 8:00 PM</p>

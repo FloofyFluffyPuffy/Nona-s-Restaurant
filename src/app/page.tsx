@@ -5,6 +5,7 @@ import HomeAbout from "@/code/components/Home/HomeAbout";
 import BestSellers from "@/code/components/Home/BestSellers/BestSellers";
 import HomeReview from "@/code/components/Home/Reviews/HomeReview";
 import Marquee, { MarqueeReverse } from "@/code/components/Home/Marquee";
+import Gallery from "@/code/components/Home/Gallery";
 export default function Home() {
   return (
     <div>
@@ -13,6 +14,7 @@ export default function Home() {
       <BestSellers/>
       <HomeAbout/>
       <HomeReview/>
+      <Gallery/>
     </div>
   );
 }

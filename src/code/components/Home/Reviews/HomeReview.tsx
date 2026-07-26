@@ -24,7 +24,7 @@ const HomeReview = async () => {
             href="https://www.yelp.com/biz/nona-s-restaurant-lodi"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#E3D5C3] px-6 py-3.5 font-semibold text-[#2A2725] transition hover:bg-[#C86632] hover:text-[#E3D5C3]"
+            className="inline-flex scale-90 hover:scale-100 items-center gap-2 rounded-full bg-[#E3D5C3] px-6 py-3.5 font-semibold text-[#2A2725] transition hover:bg-[#C86632] hover:text-[#E3D5C3]"
           >
             <img
               src="/assets/imgi_16_yelp_icon-icons.com_62753.png"
