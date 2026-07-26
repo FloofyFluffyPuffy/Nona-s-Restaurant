@@ -1,9 +1,12 @@
 
 import React from 'react'
+import { TbToolsKitchen2Filled } from 'react-icons/tb'
 import BestSellersSwiper from './BestSellersSwiper'
 import getFood from '@/code/typescript/api/getFood'
 import Link from 'next/link'
-// Define a quick interface for clean props handling
+
+const DOORDASH_URL =
+  "https://www.doordash.com/store/nona’s-restaurant-lodi-30510461/40175558/?rwg_token=AE37R_gM84b4JesefYU7BWnKjQeS5Oc-hICYPqvkJV0KgiOzQ0EjK62W6F5QwGx5NbdmnHkSpbARoEgT0UQS65VmgY03W1DvKw==&utm_campaign=gpa"
 
 const BestSellers = async () => {
     const foods = await getFood(11)
@@ -12,10 +15,15 @@ const BestSellers = async () => {
     <div className='justify-center text-center items-center bestsellers bg-[#2A2725] pb-14'>
       <h1 className='subHeading font-bold italic text-2xl text-[#E3D5C3]'>Customer's Favorite</h1>
         <BestSellersSwiper foods={foods || []}/>
-        <div className='buttonCons'>
-          <button className="rounded-full bg-[#E3D5C3] px-7 py-3.5 font-semibold text-[#2A2725] transition hover:bg-white">Reserve a Table</button>
-        <button className="rounded-full border border-[#E3D5C3]/50 px-7 py-3.5 font-semibold text-[#E3D5C3] transition hover:bg-[#E3D5C3]/10">Order Now!</button>
-        <Link href="/menu" className="rounded-full border border-[#E3D5C3]/50 px-7 py-3.5 font-semibold text-[#E3D5C3] transition hover:bg-[#E3D5C3]/10">View Full Menu</Link>
+        <div className='buttonCons flex flex-wrap justify-center gap-4 mt-8'>
+          <Link href="/menu" className="inline-flex items-center gap-2 rounded-full scale-90 hover:scale-100 border-[#E3D5C3] border-2 bg-transparent px-6 py-3.5 font-semibold text-[#E3D5C3] transition hover:text-[#2A2725] hover:bg-[#E3D5C3]">
+            <TbToolsKitchen2Filled className="h-5 w-5" />
+            <span>Menu</span>
+          </Link>
+          <a href={DOORDASH_URL} target="_blank" rel="noopener noreferrer" className="scale-90 hover:scale-100 inline-flex items-center gap-2 rounded-full bg-[#E3D5C3] px-6 py-3.5 font-semibold text-[#2A2725] transition hover:bg-[#C86632] hover:text-[#E3D5C3]">
+            <img src="/assets/imgi_116_logo144.ico" alt="DoorDash" className="h-5 w-5" />
+            <span>Order</span>
+          </a>
         </div>
     </div>
   )

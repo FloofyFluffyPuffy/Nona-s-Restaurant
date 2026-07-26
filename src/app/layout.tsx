@@ -37,7 +37,7 @@ export default function RootLayout({
         <Header/>
         {children}
         <Footer/>
-        <MarqueeReverse/>
+        <Marquee/>
       </ContextProvider>
       </body>
     </html>

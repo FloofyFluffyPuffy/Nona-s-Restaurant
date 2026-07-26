@@ -32,7 +32,7 @@ const BestSellersSwiper: React.FC<BsMenuProps> = ({ foods = [] }) => {
       >
         {foods.map((food) => (
           <SwiperSlide key={food.id}>
-            <div className='swiperCon cursor-pointer scale-94 hover:scale-99 transition-all duration-250 hover:border-4 hover:border-[#C86632] bg-[#E3D5C3] p-6 rounded-lg text-[#E3D5C3] text-center'>
+            <div className='swiperCon cursor-pointer scale-94 hover:scale-99 transition-all duration-250 hover:border-4 bg-[#E3D5C3] p-6 rounded-lg text-[#E3D5C3] text-center'>
               <div className='ImageCard aspect-video w-full mx-auto mb-4 overflow-hidden rounded-md bg-[#E3D5C3] flex items-center justify-center'>
                 <img 
                   src={food.acf?.image} 

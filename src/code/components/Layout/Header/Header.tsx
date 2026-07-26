@@ -38,25 +38,6 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-function CartIcon() {
-  return (
-    <svg
-      className="h-5 w-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="9" cy="20" r="1" />
-      <circle cx="19" cy="20" r="1" />
-      <path d="M3 3h2l2.4 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L17 6H7" />
-    </svg>
-  );
-}
-
 function OrderNowButton({ mobile = false }: { mobile?: boolean }) {
   const base =
     "inline-flex items-center justify-center gap-2 rounded-lg bg-[#E3D5C3] px-4 py-2 text-sm font-medium text-[#2A2725] transition-all duration-300 hover:scale-105 hover:bg-[#C86632] hover:text-[#E3D5C3]";
@@ -69,7 +50,7 @@ function OrderNowButton({ mobile = false }: { mobile?: boolean }) {
       className={`${base} ${mobile ? "w-full" : ""}`}
       aria-label="Order now"
     >
-      <CartIcon />
+      <img src="/assets/imgi_116_logo144.ico" alt="DoorDash" className="h-5 w-5" />
       <span>Order Now</span>
     </a>
   );
