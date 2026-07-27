@@ -41,7 +41,7 @@ const Gallery = ({ initialImages = [] }: { initialImages?: GalleryItem[] }) => {
   return (
     <section id="gallery" className="scroll-mt-24 bg-[#E3D5C3] px-4 py-12 sm:px-8 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-6 max-w-2xl">
+        <div className="mb-6 max-w-2xl" data-aos="fade-up">
           <p className="text-xl font-bold italic text-[#C86632] sm:text-2xl">
             Gallery
           </p>
@@ -50,8 +50,8 @@ const Gallery = ({ initialImages = [] }: { initialImages?: GalleryItem[] }) => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-          {visibleImages.map((item: any) => {
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:hidden">
+          {visibleImages.map((item: any, index: number) => {
             const imageUrl = item.acf?.image || item.acf?.image_url || item.acf?.gallery_image || "";
             const title = item.title?.rendered || "Gallery image";
 
@@ -60,6 +60,8 @@ const Gallery = ({ initialImages = [] }: { initialImages?: GalleryItem[] }) => {
                 key={item.id}
                 type="button"
                 onClick={() => setSelectedImage(imageUrl)}
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
                 className="group relative cursor-pointer overflow-hidden rounded-3xl border border-[#C86632]/20 bg-[#f5ebdf] text-left shadow-[0_20px_60px_rgba(0,0,0,0.30)]"
               >
                 <div className="relative aspect-square">
@@ -76,14 +78,42 @@ const Gallery = ({ initialImages = [] }: { initialImages?: GalleryItem[] }) => {
           })}
         </div>
 
-        <div className="mt-5 flex justify-center gap-3">
+        <div className="hidden grid-cols-4 gap-4 lg:grid">
+          {images.map((item: any, index: number) => {
+            const imageUrl = item.acf?.image || item.acf?.image_url || item.acf?.gallery_image || "";
+            const title = item.title?.rendered || "Gallery image";
+
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setSelectedImage(imageUrl)}
+                data-aos="fade-up"
+                data-aos-delay={(index % 4) * 100}
+                className="group relative cursor-pointer overflow-hidden rounded-3xl border border-[#C86632]/20 bg-[#f5ebdf] text-left shadow-[0_20px_60px_rgba(0,0,0,0.30)]"
+              >
+                <div className="relative aspect-square">
+                  <Image
+                    src={imageUrl}
+                    alt={item.acf?.alt || title}
+                    fill
+                    sizes="25vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-5 flex justify-center gap-3 lg:hidden" data-aos="fade-up">
           <button
             type="button"
             onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
             disabled={!hasPreviousPage}
             className="rounded-full border border-[#C86632]/40 px-4 py-2 text-sm font-semibold text-[#C86632] transition hover:bg-[#C86632] hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Previous 4
+            Previous
           </button>
           <button
             type="button"
@@ -91,7 +121,7 @@ const Gallery = ({ initialImages = [] }: { initialImages?: GalleryItem[] }) => {
             disabled={!hasNextPage}
             className="rounded-full border border-[#C86632]/40 px-4 py-2 text-sm font-semibold text-[#C86632] transition hover:bg-[#C86632] hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Next 4
+            Next
           </button>
         </div>
       </div>

@@ -6,6 +6,8 @@ import BestSellers from "@/code/components/Home/BestSellers/BestSellers";
 import HomeReview from "@/code/components/Home/Reviews/HomeReview";
 import Marquee, { MarqueeReverse } from "@/code/components/Home/Marquee";
 import Gallery from "@/code/components/Home/Gallery";
+import SectionHashScrollHandler from "@/code/components/utilities/SectionHashScrollHandler";
+
 export default function Home() {
   return (
     <div>
@@ -15,6 +17,7 @@ export default function Home() {
       <HomeAbout/>
       <HomeReview/>
       <Gallery/>
+      <SectionHashScrollHandler/>
     </div>
   );
 }

@@ -17,7 +17,7 @@ const HomeAbout = () => {
   return (
     <section className="bg-[#E3D5C3] px-4 py-12 sm:px-6 sm:py-16 lg:px-6">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-6 lg:grid-cols-4 lg:gap-8">
-        <div className="group aspect-[4/5] overflow-hidden rounded-3xl border border-[#C86632]/20 shadow-[0_20px_60px_rgba(0,0,0,0.30)] lg:col-span-1" data-aos="fade-right">
+        <div className="group aspect-[4/5] overflow-hidden rounded-3xl border border-[#C86632]/20 shadow-[0_20px_60px_rgba(0,0,0,0.30)] lg:hidden" data-aos="fade-right">
           <img 
             src={images[activeImage]}
             alt="Nona's restaurant kitchen"
@@ -25,7 +25,23 @@ const HomeAbout = () => {
           />
         </div>
 
-        <div className="space-y-6 text-[#2A2725] lg:col-span-3 lg:pl-10" data-aos="fade-up" data-aos-delay="160">
+        <div className="hidden group aspect-[4/5] overflow-hidden rounded-3xl border border-[#C86632]/20 shadow-[0_20px_60px_rgba(0,0,0,0.30)] lg:block lg:col-span-1" data-aos="fade-right">
+          <img 
+            src={images[0]}
+            alt="Nona's restaurant exterior"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+        </div>
+
+        <div className="hidden group aspect-[4/5] overflow-hidden rounded-3xl border border-[#C86632]/20 shadow-[0_20px_60px_rgba(0,0,0,0.30)] lg:block lg:col-span-1 lg:translate-y-8" data-aos="fade-right" data-aos-delay="100">
+          <img 
+            src={images[1]}
+            alt="Nona's restaurant interior"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+        </div>
+
+        <div className="space-y-6 text-[#2A2725] lg:col-span-2 lg:pl-6" data-aos="fade-up" data-aos-delay="160">
           <div className="space-y-3 sm:space-y-4">
             <span className="block text-2xl font-bold italic text-[#C86632]">Our Story</span>
             <h2 className="text-3xl font-bold tracking-tight text-[#2A2725] sm:text-4xl">The Heart of Nona’s Kitchen</h2>

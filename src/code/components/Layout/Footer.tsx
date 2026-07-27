@@ -2,7 +2,7 @@
 
 const Footer = () => {
   return (
-    <footer className="bg-[#2A2725] text-[#E3D5C3]" data-aos="fade-up">
+    <footer id='location' className="bg-[#2A2725] text-[#E3D5C3]" data-aos="fade-up">
       <div className="mx-auto max-w-7xl space-y-10 px-6 py-12 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr]">
           <div className="space-y-6">

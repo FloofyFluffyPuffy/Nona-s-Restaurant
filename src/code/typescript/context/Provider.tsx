@@ -1,10 +1,13 @@
-"use client"
+"use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { ContextType } from "../types";
 const Context = createContext<ContextType | null>(null);
+// one thing about create context it actually need a value to create, so either it the type ContextType or at least null
+// (null) mean by default this have no value
 export const useContextData = () => {
-    const Context2 = useContext(Context)
-      if (!Context2) {
+  // custom hook to get context, custom hook should start with use
+  const Context2 = useContext(Context);
+  if (!Context2) {
     throw new Error("Context data must be use within provider");
   }
   return Context2;
