@@ -3,9 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import Header from "@/code/components/Layout/Header/Header";
 import Footer from "@/code/components/Layout/Footer";
+import SectionHashScrollHandler from "@/code/components/Layout/SectionHashScrollHandler";
 import { ContextProvider } from "@/code/typescript/context/Provider";
 import Marquee, { MarqueeReverse } from "@/code/components/Home/Marquee";
 import { AOSInit } from "@/code/typescript/context/AOSInit";
+import BackTopBtn from "@/code/components/utilities/BackTopBtn";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -36,8 +38,10 @@ export default function RootLayout({
         <ContextProvider>
         <Header/>
         {children}
+        <SectionHashScrollHandler />
         <Footer/>
         <Marquee/>
+        <BackTopBtn />
       </ContextProvider>
       </body>
     </html>

@@ -12,10 +12,10 @@ const BestSellers = async () => {
     const foods = await getFood(11)
     console.log(foods)
   return (
-    <div className='justify-center text-center items-center bestsellers bg-[#2A2725] pb-14'>
-      <h1 className='subHeading font-bold italic text-2xl text-[#E3D5C3]'>Customer's Favorite</h1>
+    <div className='justify-center text-center items-center bestsellers bg-[#2A2725] px-4 pb-14 sm:px-6'>
+      <h1 className='subHeading pt-10 text-2xl font-bold italic text-[#E3D5C3]' data-aos="fade-up">Customer's Favorite</h1>
         <BestSellersSwiper foods={foods || []}/>
-        <div className='buttonCons flex flex-wrap justify-center gap-4 mt-8'>
+        <div className='buttonCons mt-8 flex flex-wrap justify-center gap-4' data-aos="fade-up" data-aos-delay="120">
           <Link href="/menu" className="inline-flex items-center gap-2 rounded-full scale-90 hover:scale-100 border-[#E3D5C3] border-2 bg-transparent px-6 py-3.5 font-semibold text-[#E3D5C3] transition hover:text-[#2A2725] hover:bg-[#E3D5C3]">
             <TbToolsKitchen2Filled className="h-5 w-5" />
             <span>Menu</span>

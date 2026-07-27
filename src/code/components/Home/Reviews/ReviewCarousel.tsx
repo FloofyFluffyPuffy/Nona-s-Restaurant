@@ -74,6 +74,7 @@ export default function ReviewCarousel({ reviews }: ReviewCarouselProps) {
   }
 
   return (
+    <div data-aos="fade-up" data-aos-delay="120" data-aos-anchor-placement="top-bottom">
     <Swiper
       modules={[Autoplay]}
       slidesPerView={1}
@@ -92,5 +93,6 @@ export default function ReviewCarousel({ reviews }: ReviewCarouselProps) {
         </SwiperSlide>
       ))}
     </Swiper>
+    </div>
   )
 }

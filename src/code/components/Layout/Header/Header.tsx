@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useContextData } from "@/code/typescript/context/Provider";
 
 const navItems = [
   { label: "Home", path: "/", active: true },
   { label: "Menu", path: "/menu", active: false },
   { label: "About", path: "/about", active: false },
-  { label: "Contact", path: "/contact", active: false },
   {
     label: "Others",
     path: "#others",
@@ -61,7 +61,9 @@ export default function MinimalHeader() {
   const [isOthersOpen, setIsOthersOpen] = useState(false);
   const [isMobileOthersOpen, setIsMobileOthersOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { scroll, setScroll } = useContextData();
+  const pathname = usePathname();
+  const router = useRouter();
+  const { scroll, setScroll, setSectionHash } = useContextData();
 
   useEffect(() => {
     const onScroll = () => {
@@ -97,6 +99,24 @@ export default function MinimalHeader() {
     setIsMobileOthersOpen(false);
   };
 
+  const handleHashNavigation = (hash: string) => {
+    const normalizedHash = hash.startsWith("#") ? hash : `#${hash}`;
+
+    if (pathname === "/") {
+      const targetElement = document.querySelector(normalizedHash);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
+
+    setSectionHash(normalizedHash);
+
+    if (pathname !== "/") {
+      router.push(`/${normalizedHash}`);
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-500 ease-in-out ${
@@ -129,17 +149,18 @@ export default function MinimalHeader() {
                 {isOthersOpen && (
                   <div className="absolute left-0 mt-2 w-48 rounded-lg border border-[#E3D5C3]/20 bg-[#2A2725] p-2 shadow-xl">
                     {item.dropdown.map((dropItem) => (
-                      <Link
+                      <button
                         key={dropItem.id}
-                        href={dropItem.path}
+                        type="button"
                         onClick={() => {
                           setIsOthersOpen(false);
                           setIsOpen(false);
+                          handleHashNavigation(dropItem.path);
                         }}
-                        className="block rounded-md px-3 py-2 text-sm text-[#E3D5C3] transition-colors hover:bg-[#C86632] hover:text-white"
+                        className="block w-full rounded-md px-3 py-2 text-left text-sm text-[#E3D5C3] transition-colors hover:bg-[#C86632] hover:text-white"
                       >
                         {dropItem.name}
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 )}
@@ -148,6 +169,12 @@ export default function MinimalHeader() {
               <Link
                 key={item.label}
                 href={item.path}
+                onClick={(event) => {
+                  if (item.path.startsWith("#")) {
+                    event.preventDefault();
+                    handleHashNavigation(item.path);
+                  }
+                }}
                 className="text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
               >
                 {item.label}
@@ -197,14 +224,17 @@ export default function MinimalHeader() {
                   {isMobileOthersOpen && (
                     <div className="ml-4 flex flex-col gap-2">
                       {item.dropdown.map((dropItem) => (
-                        <Link
+                        <button
                           key={dropItem.id}
-                          href={dropItem.path}
-                          onClick={closeMenu}
-                          className="text-sm text-[#E3D5C3] hover:text-[#C86632]"
+                          type="button"
+                          onClick={() => {
+                            handleHashNavigation(dropItem.path);
+                            closeMenu();
+                          }}
+                          className="text-left text-sm text-[#E3D5C3] hover:text-[#C86632]"
                         >
                           {dropItem.name}
-                        </Link>
+                        </button>
                       ))}
                     </div>
                   )}
@@ -213,7 +243,13 @@ export default function MinimalHeader() {
                 <Link
                   key={item.label}
                   href={item.path}
-                  onClick={closeMenu}
+                  onClick={(event) => {
+                    if (item.path.startsWith("#")) {
+                      event.preventDefault();
+                      handleHashNavigation(item.path);
+                    }
+                    closeMenu();
+                  }}
                   className="text-base font-medium text-[#E3D5C3] hover:text-[#C86632]"
                 >
                   {item.label}

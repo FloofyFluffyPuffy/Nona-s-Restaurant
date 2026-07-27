@@ -14,8 +14,9 @@ export interface Food {
   acf: {
     price: string;
     description: string;
-    image: string; 
-    alt: string;
+    image?: string;
+    photo?: string;
+    alt?: string;
   };
 }
 
