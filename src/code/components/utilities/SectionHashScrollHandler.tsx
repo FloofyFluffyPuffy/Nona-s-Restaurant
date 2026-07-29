@@ -4,7 +4,6 @@ import { useContextData } from '@/code/typescript/context/Provider';
 
 const SectionHashScrollHandler = () => {
   const { sectionHash, setSectionHash } = useContextData()
-  console.log(`current hash ${sectionHash} `);
 
   useEffect(() => {
     if (!sectionHash) return;
