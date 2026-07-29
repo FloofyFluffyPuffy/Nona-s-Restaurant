@@ -26,7 +26,7 @@ export default function AboutPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#C86632]">
             Our Story
           </p>
-          <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">
+          <h2 className="mt-3 text-[#2A2725] font-display text-4xl font-bold sm:text-5xl">
             A table where everyone belongs
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-[#2A2725]/80">
