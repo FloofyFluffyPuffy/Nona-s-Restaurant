@@ -33,7 +33,7 @@ const HomeAbout = () => {
           />
         </div>
 
-        <div className="hidden group aspect-[4/5] overflow-hidden rounded-3xl border border-[#C86632]/20 shadow-[0_20px_60px_rgba(0,0,0,0.30)] lg:block lg:col-span-1 lg:translate-y-8" data-aos="fade-right" data-aos-delay="100">
+        <div className="hidden group aspect-[4/5] overflow-hidden rounded-3xl border border-[#C86632]/20 shadow-[0_20px_60px_rgba(0,0,0,0.30)] lg:block lg:col-span-1 lg:translate-y-8" data-aos="fade-left" data-aos-delay="100">
           <img 
             src={images[1]}
             alt="Nona's restaurant interior"

@@ -56,6 +56,13 @@ h6 {
     url("/assets/imgi_55_about-bg.755e6d02.jpg");
 }
 
+.Menu {
+  @apply bg-cover bg-center bg-no-repeat bg-fixed;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)),
+    url("/assets/menuBg.jpg");
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

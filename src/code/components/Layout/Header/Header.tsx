@@ -14,6 +14,7 @@ const navItems = [
     page: "#others",
     active: false,
     dropdown: [
+      { name: "Reviews", id: "#review", page: "/" },
       { name: "Gallery", id: "#gallery", page: "/" },
       { name: "Location", id: "#location", page: "/" },
     ],
