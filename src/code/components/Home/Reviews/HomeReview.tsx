@@ -7,7 +7,7 @@ const HomeReview = async () => {
   const reviewData: Review[] = reviews ?? []
 
   return (
-    <section className="reviewSection bg-[#2A2725] px-4 py-16 text-[#E3D5C3] sm:px-6">
+    <section id='review' className="reviewSection bg-[#2A2725] px-4 py-16 text-[#E3D5C3] sm:px-6">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 text-center" data-aos="fade-up">
           <p className="text-[#C86632] text-sm uppercase tracking-[0.3em]">From Yelp</p>
