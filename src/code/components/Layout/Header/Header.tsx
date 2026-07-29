@@ -107,115 +107,176 @@ export default function MinimalHeader() {
     setIsMobileOthersOpen(false);
   };
 
-  return (
-    <header
-      className={`fixed top-0 z-50 w-full transition-all duration-500 ease-in-out ${
-        scroll > 120 ? "bg-[#2A2725]/95 shadow-lg" : "bg-[#2A2725]/70"
-      }`}
-    >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center" onClick={closeMenu}>
-          <img
-            src="/assets/logo.png"
-            alt="Nona's Restaurant"
-            className="h-10 w-10 rounded-full bg-white object-contain shadow-2xl ring-2 ring-white"
-          />
-        </Link>
+  const isScrolledPast120 = scroll > 120;
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) =>
-            item.dropdown ? (
-              <div key={item.label} ref={dropdownRef} className="relative">
-                <button
-                  type="button"
-                  onClick={() => setIsOthersOpen((prev) => !prev)}
-                  className="inline-flex cursor-pointer items-center text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
-                  aria-expanded={isOthersOpen}
+  return (
+    <header className="fixed top-0 z-50 w-full transition-transform duration-500 ease-in-out">
+      {/* Topbar Section */}
+      {/* <div
+        className={`hidden md:block overflow-hidden transition-all duration-500 ease-in-out bg-transparent ${
+          isScrolledPast120
+            ? "-translate-y-full max-h-0 opacity-0"
+            : "translate-y-0 max-h-12 opacity-100"
+        }`}
+      >
+        <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 text-xs font-medium text-[#E3D5C3] sm:px-6 lg:px-8">
+          <a
+            href="tel:+12092637023"
+            className="inline-flex items-center gap-2 transition-colors hover:text-[#C86632]"
+          >
+            <svg
+              className="h-3.5 w-3.5 text-[#C86632]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            <span>+1 (209) 263-7023</span>
+          </a>
+
+          <div className="inline-flex items-center gap-2">
+            <svg
+              className="h-3.5 w-3.5 text-[#C86632]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>Tue — Sun: 11:00 AM – 9:00 PM</span>
+          </div>
+        </div>
+      </div> */}
+
+      {/* Main Navigation Header */}
+      <div
+        className={`w-full transition-all duration-300 ease-in-out ${
+          isScrolledPast120
+            ? "bg-[#2A2725] shadow-lg"
+            : "bg-[#2A2725]/50 backdrop-blur-md"
+        }`}
+      >
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-3">
+          {/* Column 1: Logo */}
+          <div className="flex items-center justify-start">
+            <Link href="/" className="flex items-center" onClick={closeMenu}>
+              <img
+                src="/assets/logo.png"
+                alt="Nona's Restaurant"
+                className="h-10 w-10 rounded-full bg-white object-contain shadow-2xl ring-2 ring-white"
+              />
+            </Link>
+          </div>
+
+          {/* Column 2: Centered Desktop Navigation */}
+          <nav className="hidden items-center justify-center gap-8 md:flex">
+            {navItems.map((item) =>
+              item.dropdown ? (
+                <div key={item.label} ref={dropdownRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setIsOthersOpen((prev) => !prev)}
+                    className="inline-flex cursor-pointer items-center text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
+                    aria-expanded={isOthersOpen}
+                  >
+                    {item.label}
+                    <ChevronIcon open={isOthersOpen} />
+                  </button>
+
+                  {isOthersOpen && (
+                    <div className="absolute left-0 mt-2 w-48 rounded-lg border border-[#E3D5C3]/20 bg-[#2A2725] p-2 shadow-xl">
+                      {item.dropdown.map((dropItem) => (
+                        <Link
+                          key={dropItem.id}
+                          href={
+                            dropItem.name === "Booking" || dropItem.name === "Location"
+                              ? dropItem.id
+                              : pageName === dropItem.page
+                              ? dropItem.id
+                              : dropItem.page
+                          }
+                          onClick={(e) => {
+                            if (pageName === dropItem.page) {
+                              e.preventDefault();
+                              const targetElement = document.querySelector(dropItem.id);
+                              if (targetElement) {
+                                targetElement.scrollIntoView({ behavior: "smooth" });
+                              }
+                              closeMenu();
+                            } else if (dropItem.name !== "Booking" && dropItem.name !== "Location") {
+                              setSectionHash(dropItem.id);
+                              closeMenu();
+                            }
+                          }}
+                          className="block w-full rounded-md px-3 py-2 text-left text-sm text-[#E3D5C3] transition-colors hover:bg-[#C86632] hover:text-white"
+                        >
+                          {dropItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.page}
+                  className="text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
                 >
                   {item.label}
-                  <ChevronIcon open={isOthersOpen} />
-                </button>
-
-                {isOthersOpen && (
-                  <div className="absolute left-0 mt-2 w-48 rounded-lg border border-[#E3D5C3]/20 bg-[#2A2725] p-2 shadow-xl">
-                    {item.dropdown.map((dropItem) => (
-                      <Link
-                        key={dropItem.id}
-                        href={
-                          dropItem.name === "Booking" || dropItem.name === "Location"
-                            ? dropItem.id
-                            : pageName === dropItem.page
-                            ? dropItem.id
-                            : dropItem.page
-                        }
-                        onClick={(e) => {
-                          if (pageName === dropItem.page) {
-                            e.preventDefault();
-                            const targetElement = document.querySelector(dropItem.id);
-                            if (targetElement) {
-                              targetElement.scrollIntoView({ behavior: "smooth" });
-                            }
-                            closeMenu();
-                          } else if (dropItem.name !== "Booking" && dropItem.name !== "Location") {
-                            setSectionHash(dropItem.id);
-                            closeMenu();
-                          }
-                        }}
-                        className="block w-full rounded-md px-3 py-2 text-left text-sm text-[#E3D5C3] transition-colors hover:bg-[#C86632] hover:text-white"
-                      >
-                        {dropItem.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                key={item.label}
-                href={item.page}
-                className="text-sm font-medium text-[#E3D5C3] transition-colors duration-150 hover:text-[#C86632]"
-              >
-                {item.label}
-              </Link>
-            )
-          )}
-        </nav>
-
-        <div className="hidden items-center gap-4 md:flex">
-          <OrderNowButton />
-        </div>
-
-        {/* Mobile Toggle Button */}
-        <button
-          onClick={toggleMobileMenu}
-          type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-[#E3D5C3] hover:bg-[#C86632]/20 md:hidden"
-          aria-expanded={isOpen}
-          aria-label="Toggle navigation menu"
-        >
-          <svg
-            className="h-6 w-6 fill-none stroke-current stroke-2"
-            viewBox="0 0 24 24"
-          >
-            {isOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+                </Link>
+              )
             )}
-          </svg>
-        </button>
+          </nav>
+
+          
+          <div className="hidden items-center justify-end gap-4 md:flex">
+            <OrderNowButton />
+          </div>
+
+          
+          <button
+            onClick={toggleMobileMenu}
+            type="button"
+            className="inline-flex items-center justify-center rounded-md p-2 text-[#E3D5C3] hover:bg-[#C86632]/20 md:hidden"
+            aria-expanded={isOpen}
+            aria-label="Toggle navigation menu"
+          >
+            <svg
+              className="h-6 w-6 fill-none stroke-current stroke-2"
+              viewBox="0 0 24 24"
+            >
+              {isOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Navigation */}
+      
       {isOpen && (
         <div className="border-t border-[#E3D5C3]/20 bg-[#2A2725] px-4 pb-6 pt-4 md:hidden">
           <div className="flex flex-col gap-3">

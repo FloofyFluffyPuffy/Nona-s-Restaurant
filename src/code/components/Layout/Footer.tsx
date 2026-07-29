@@ -78,8 +78,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-[#E3D5C3]">Opening Hours</h3>
             <div className="rounded-[28px] border border-[#E3D5C3] bg-[#231f19] p-6">
               <div className="space-y-2 text-sm text-[#E3D5C3]/90">
-                <p className="font-semibold text-[#E3D5C3]">Monday — Sunday</p>
-                <p className="text-[#E3D5C3] font-semibold">11:00 AM – 8:00 PM</p>
+                <p className="font-semibold text-[#E3D5C3]">Tuesday — Sunday</p>
+                <p className="text-[#E3D5C3] font-semibold">11:00 AM – 9:00 PM</p>
               </div>
             </div>
           </div>
