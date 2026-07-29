@@ -68,7 +68,13 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-[#E3D5C3]">Phone</p>
-                  <a href="tel:+12092637023" className="text-[#E3D5C3] font-semibold hover:text-[#E3D5C3]">+1 209-263-7023</a>
+                  <a href="tel:+12092637023" className="text-[#E3D5C3] font-semibold hover:underline">+1 209-263-7023</a>
+                </div>
+                <div>
+                  <p className="font-semibold text-[#E3D5C3]">Email</p>
+                  <a href="mailto:nonasrestaurantlodi@gmail.com" className="text-[#E3D5C3] font-semibold hover:underline break-all">
+                    nonasrestaurantlodi@gmail.com
+                  </a>
                 </div>
               </div>
             </div>
@@ -96,7 +102,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-[#C86632]/10 pt-6 text-center text-sm text-[#E3D5C3]/60">
-         © {new Date().getFullYear()}&nbsp;Nona&apos;s Restaurant
+          © {new Date().getFullYear()}&nbsp;Nona&apos;s Restaurant
         </div>
       </div>
     </footer>

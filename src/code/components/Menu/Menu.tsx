@@ -67,7 +67,6 @@ const Menu = () => {
             />
           </div>
           <div className="max-w-2xl">
-            {/* #C86632 Accent for Subheading */}
             <p className="text-xl font-bold italic text-[#C86632]">Our Menu</p>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-[#E3D5C3] sm:text-4xl">
               Family recipes, handcrafted with heart.
@@ -87,7 +86,7 @@ const Menu = () => {
                   }}
                   className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
                     isActive
-                      ? "border-[#C86632] bg-[#C86632] text-[#E3D5C3]" // Accent fill on active tab
+                      ? "border-[#C86632] bg-[#C86632] text-[#E3D5C3]" 
                       : "border-[#E3D5C3]/30 bg-[#E3D5C3] text-[#2A2725] hover:border-[#C86632] hover:text-[#C86632]"
                   }`}
                 >
@@ -98,11 +97,11 @@ const Menu = () => {
           </div>
         </div>
 
-        {/* Main Outer Container (#2A2725 Background, #E3D5C3 Border) */}
+ 
         <div className="rounded-[32px] border border-[#E3D5C3]/20 bg-[#2A2725] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.4)] sm:p-8" data-aos="fade-up" data-aos-delay="140">
           {currentSection ? (
             <>
-              {/* Centered Title & Description (#E3D5C3 Text) */}
+            
               <div className="mb-6 border-b border-[#E3D5C3]/15 pb-4 text-center">
                 <h3 className="text-2xl font-semibold text-[#E3D5C3]">{currentSection.label}</h3>
                 <p className="mt-2 text-sm leading-6 text-[#E3D5C3]/80">{currentSection.description}</p>
