@@ -5,7 +5,6 @@ import SectionHashScrollHandler from "@/code/components/utilities/SectionHashScr
 export default function MenuPage() {
   return (
     <main>
-      <MenuHero />
       <Menu />
       <BackTopBtn/>
       <SectionHashScrollHandler/>
