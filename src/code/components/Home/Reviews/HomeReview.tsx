@@ -13,7 +13,7 @@ const HomeReview = async () => {
           <p className="text-[#C86632] text-sm uppercase tracking-[0.3em]">From Yelp</p>
           <h2 className="mt-3 text-3xl font-bold">What Guests Are Saying</h2>
           <p className="mx-auto mt-3 max-w-2xl text-[#E3D5C3]/80">
-            Real reviews from local guests who love our food, atmosphere, and hospitality.
+           What customers have to say about our food, atmosphere, and hospitality.
           </p>
         </div>
 
